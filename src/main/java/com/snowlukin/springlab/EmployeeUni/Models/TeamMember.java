@@ -32,6 +32,9 @@ public class TeamMember {
     @Column(name = "role", nullable = false)
     private String role;
 
+    @Column(name = "specialization", nullable = false)
+    private String specialization;
+
     @Column(name = "hiring_date", nullable = false)
     private LocalDate hiringDate;
 }

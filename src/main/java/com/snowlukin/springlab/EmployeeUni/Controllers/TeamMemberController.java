@@ -81,6 +81,23 @@ public class TeamMemberController {
         }
     }
 
+    @PutMapping("/spec/{id}")
+    public ResponseEntity<TeamMember> updateSpec(@PathVariable long id, @RequestBody String newSpec) {
+        try {
+            Optional<TeamMember> teamMemberOptional = teamMemberRepository.getById(id);
+            if (teamMemberOptional.isPresent()) {
+                TeamMember teamMember = teamMemberOptional.get();
+                teamMember.setSpecialization(newSpec);
+                return ResponseEntity.ok(teamMemberRepository.update(teamMember));
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PutMapping("/hiring/{id}")
     public ResponseEntity<TeamMember> updateHiringDate(@PathVariable long id, @RequestBody String hiringDate) {
         try {
