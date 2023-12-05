@@ -20,20 +20,17 @@ public class TeamMember {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "first_name", nullable = false, length = 50)
-    private String firstName;
+    @Column(name = "name", nullable = false, length = 50)
+    private String name;
 
-    @Column(name = "last_name", nullable = false, length = 50)
-    private String lastName;
+    @Column(name = "surname", nullable = false, length = 50)
+    private String surname;
 
     @Column(name = "middle_name", nullable = false, length = 50)
     private String middleName;
 
     @Column(name = "role", nullable = false)
     private String role;
-
-    @Column(name = "specialization", nullable = false)
-    private String specialization;
 
     @Column(name = "hiring_date", nullable = false)
     private LocalDate hiringDate;

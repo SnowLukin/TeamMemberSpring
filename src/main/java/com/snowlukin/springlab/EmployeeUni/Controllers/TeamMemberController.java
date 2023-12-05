@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/team-members")
+@RequestMapping("/api/v1/team-members")
 public class TeamMemberController {
     @Autowired
     private TeamMemberRepository teamMemberRepository;
@@ -52,6 +53,41 @@ public class TeamMemberController {
             Optional<TeamMember> teamMemberOptional = teamMemberRepository.getById(id);
             if (teamMemberOptional.isPresent()) {
                 teamMember.setId(id);
+                return ResponseEntity.ok(teamMemberRepository.update(teamMember));
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
+    @PutMapping("/role/{id}")
+    public ResponseEntity<TeamMember> updateRole(@PathVariable long id, @RequestBody String newRole) {
+        try {
+            Optional<TeamMember> teamMemberOptional = teamMemberRepository.getById(id);
+            if (teamMemberOptional.isPresent()) {
+                TeamMember teamMember = teamMemberOptional.get();
+                teamMember.setRole(newRole);
+                return ResponseEntity.ok(teamMemberRepository.update(teamMember));
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/hiring/{id}")
+    public ResponseEntity<TeamMember> updateHiringDate(@PathVariable long id, @RequestBody String hiringDate) {
+        try {
+            Optional<TeamMember> teamMemberOptional = teamMemberRepository.getById(id);
+            if (teamMemberOptional.isPresent()) {
+                TeamMember teamMember = teamMemberOptional.get();
+                teamMember.setHiringDate(LocalDate.parse(hiringDate));
                 return ResponseEntity.ok(teamMemberRepository.update(teamMember));
             } else {
                 return ResponseEntity.notFound().build();
